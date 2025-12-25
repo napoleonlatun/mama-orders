@@ -1,5 +1,8 @@
 [phases.setup]
-nixPkgs = ['php84']
+nixPkgs = ['php83', 'php83Packages.composer']
 
 [phases.install]
-cmds = ['composer install --no-dev --optimize-autoloader']
+cmds = ['php83 /nix/store/$(ls /nix/store | grep composer)/bin/composer install --no-dev --optimize-autoloader --ignore-platform-reqs']
+
+[start]
+cmd = 'php83 artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
